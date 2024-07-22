@@ -1,0 +1,11 @@
+USE SQLCinema;
+CALL create_coupon("P6BB6GCU", 999999, NOW() + INTERVAL 22 DAY, NOW(), "AMOUNT", 4, 1);
+CALL create_coupon("MW3O8YY1", 999999, NOW() + INTERVAL 28 DAY, NOW(), "AMOUNT", 83, 14);
+CALL create_coupon("NZ4W7HW6", 999999, NOW() + INTERVAL 22 DAY, NOW(), "AMOUNT", 999, 1);
+CALL create_coupon("MTJASO5G", 22, NOW() + INTERVAL 20 DAY, NOW(), "PERCENT", 27, 32);
+CALL create_coupon("98GWYNC9", 70, NOW() + INTERVAL 21 DAY, NOW(), "PERCENT", 96, 90);
+CALL create_coupon("MRC7YCTI", 999999, NOW() + INTERVAL 12 DAY, NOW(), "AMOUNT", 1, 1);
+CALL create_coupon("PX38FE9F", 90, NOW() + INTERVAL 21 DAY, NOW(), "PERCENT", 60, 30);
+CALL create_coupon("NSBKRS9U", 6, NOW() + INTERVAL 13 DAY, NOW(), "PERCENT", 46, 60);
+CALL create_coupon("TJTQNIBM", 29, NOW() + INTERVAL 26 DAY, NOW(), "AMOUNT", 26, 42);
+CALL create_coupon("UP2HZP3Y", 36, NOW() + INTERVAL 23 DAY, NOW(), "AMOUNT", 46, 47);

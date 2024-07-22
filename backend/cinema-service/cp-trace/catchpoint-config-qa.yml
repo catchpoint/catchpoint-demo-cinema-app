@@ -1,0 +1,26 @@
+catchpoint:
+  apikey: <API_KEY>
+  application:
+    name: cinema-application
+  report:
+    rest:
+      baseurl: https://collector-qa.tracing.catchpoint.net/v1/
+  trace:
+    instrument:
+      traceableconfig1: com.sqlcinema.backend.controller.*.*[traceLineByLine=true]
+      traceableconfig2: com.sqlcinema.backend.service.*.*[traceLineByLine=true]
+      traceableconfig3: com.sqlcinema.backend.repository.*.*[traceLineByLine=true]
+      traceableconfig4: com.sqlcinema.backend.manager.*.*[traceLineByLine=true]
+      traceableconfig5: com.sqlcinema.backend.security.*.*[traceLineByLine=true]
+    integrations:
+      http:
+        path:
+          depth: 4
+          prefixes:
+            ignored: /health,/api/movie/popular,/api/movie/random
+      spring:
+        web:
+          request:
+            mask: false
+          response:
+            mask: false

@@ -1,0 +1,21 @@
+.movie-details {
+    padding: 5px 10px;
+    text-align: center;
+    white-space: nowrap;
+
+    display: flex;
+    gap: 5px;
+}
+
+.movie-details.pegi {
+    background-color: #fff;
+    color: #000;
+}
+
+.movie-details.quality {
+    background-color: #000;
+    color: #f1f1f1;
+
+    border: 1px solid #fff;
+    padding: 4px 10px;
+}
