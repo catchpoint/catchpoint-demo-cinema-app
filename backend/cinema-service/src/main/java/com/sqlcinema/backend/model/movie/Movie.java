@@ -1,7 +1,5 @@
 package com.sqlcinema.backend.model.movie;
 
-import com.catchpoint.trace.api.invocation.InvocationAPI;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +28,4 @@ public class Movie {
     private boolean favorite;
     private List<Genre> genres;
     private List<Person> cast;
-
-    @JsonIgnore
-    public void setTags() {
-        InvocationAPI.setTag("title", title);
-        InvocationAPI.setTag("country", country);
-        InvocationAPI.setTag("language", language);
-        InvocationAPI.setTag("rating", String.valueOf(rating));
-    }
 }

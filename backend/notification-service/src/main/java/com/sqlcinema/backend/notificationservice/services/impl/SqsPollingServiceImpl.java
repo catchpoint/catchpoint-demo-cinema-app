@@ -4,7 +4,6 @@ import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.ReceiveMessageResult;
-import com.catchpoint.trace.api.trace.annotations.Traced;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sqlcinema.backend.notificationservice.models.Notification;
 import com.sqlcinema.backend.notificationservice.services.EmailService;
@@ -34,7 +33,6 @@ public class SqsPollingServiceImpl implements SqsPollingService {
 
     @Override
     @Scheduled(fixedRate = 5000) // every 5 seconds
-    @Traced(entryPoint = true)
     public void poll() {
         logger.info("Polling SQS queue");
         ReceiveMessageRequest request = new ReceiveMessageRequest()

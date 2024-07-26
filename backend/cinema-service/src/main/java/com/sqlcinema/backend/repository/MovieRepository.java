@@ -44,8 +44,6 @@ public class MovieRepository {
 
         movie.setGenres(jdbcTemplate.query(genreQuery,
                 BeanPropertyRowMapper.newInstance(Genre.class), movie.getMovieId()));
-
-        movie.setTags();
     }
     
     public void addCast(Movie movie) {
@@ -181,7 +179,6 @@ public class MovieRepository {
     }
 
     public int addMovie(MovieRequest movie) {
-        movie.setTags();
         String query = "CALL create_movie(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         logger.sqlLog(query, createObjectArray(movie.toString()));
 

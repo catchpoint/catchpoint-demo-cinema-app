@@ -42,7 +42,6 @@ services:
       context: ./backend/auth-service
       dockerfile: Dockerfile
     environment:
-      TRACING_PROFILE: ${TRACING_PROFILE}
       MYSQL_URL: jdbc:mysql://db:3306/sqlcinema?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
       MYSQL_USER: root
       MYSQL_PASSWORD: root
@@ -61,7 +60,6 @@ services:
       context: ./backend/cinema-service
       dockerfile: Dockerfile
     environment:
-      TRACING_PROFILE: ${TRACING_PROFILE}
       MYSQL_URL: jdbc:mysql://db:3306/sqlcinema?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
       MYSQL_USER: root
       MYSQL_PASSWORD: root
@@ -107,7 +105,6 @@ services:
       context: ./backend/notification-service
       dockerfile: Dockerfile
     environment:
-      TRACING_PROFILE: ${TRACING_PROFILE}
       SQS_QUEUE_URL: http://cinema-app-localstack-sqs:4566/000000000000/cinema-queue
       EMAIL_USERNAME: test@cinema-app.local
       AWS_REGION: us-east-1

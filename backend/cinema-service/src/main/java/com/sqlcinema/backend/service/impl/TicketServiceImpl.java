@@ -21,8 +21,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import java.net.http.HttpHeaders;
 import java.util.*;
 
 @Service
@@ -62,7 +60,6 @@ public class TicketServiceImpl implements TicketService {
         if (newReservation == null) {
             return null;
         }
-        // InvocationAPI.addOutgoingTraceLink("reservation:" + newReservation.getReservationId());
         try {
             checkCreditCard(reservation.getPaymentInfo().getCardNumber());
             float price = calculatePrice(reservation);
@@ -79,7 +76,6 @@ public class TicketServiceImpl implements TicketService {
 
             Ticket ticket = ticketRepository.getTicket(reservation.getTicketId());
             Movie movie = movieRepository.getMovieById(ticket.getMovieId());
-            movie.setTags();
 
             Map<String, Object> message = new HashMap<>();
             message.put("reservationId", newReservation.getReservationId());

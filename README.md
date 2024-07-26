@@ -15,13 +15,13 @@ details, and book tickets for a movie.
 1. Retrieve your api key from Catchpoint Portal
 2. Change `<API_KEY>` value from the
     - For **Catchpoint** agent in the one of the following files:
-        - `backend/auth-service/cp-trace/catchpoint-config-[staging/qa/prod].json`
-        - `backend/cinema-service/cp-trace/catchpoint-config-[staging/qa/prod].json`
-        - `backend/notification-service/cp-trace/catchpoint-config-[staging/qa/prod].json`
+        - `backend/auth-service/cp-trace/catchpoint-config.json`
+        - `backend/cinema-service/cp-trace/catchpoint-config.json`
+        - `backend/notification-service/cp-trace/catchpoint-config.json`
     - For **OpenTelemetry** agent:
-        - `backend/auth-service/otel-trace/otel-config-[staging/qa/prod].json`
-        - `backend/cinema-service/otel-trace/otel-config-[staging/qa/prod].json`
-        - `backend/notification-service/otel-trace/otel-config-[staging/qa/prod].json`
+        - `backend/auth-service/otel-trace/otel-config.json`
+        - `backend/cinema-service/otel-trace/otel-config.json`
+        - `backend/notification-service/otel-trace/otel-config.json`
 
 3. **[Optional]** If you want to customize each service name, change the 
    - For **Catchpoint** agent `catchpoint.application.name`
@@ -32,18 +32,12 @@ details, and book tickets for a movie.
 ## Getting Started - Manual Installation
 
 1. Clone the repository
-2. Set Tracing Profile environment variable. **(staging/qa/prod** or **otel-staging/otel-qa/otel-prod)**
-
-```bash
-export TRACING_PROFILE=staging
-```
-
-3. Run the following command to start the application
+2. Run the following command to start the application
 
 ```bash
 docker-compose up
 ``` 
-4. Open [Web UI](http://localhost:3000/login) in your browser to access the cinema app
+3. Open [Web UI](http://localhost:3000/login) in your browser to access the cinema app
 
 ## Getting Started - Automated Installation
 

@@ -5,22 +5,6 @@ random_number () {
     echo $((FIRST + RANDOM % SECOND))
 }
 
-get_url () {
-    if [ "$1" == "staging" ]; then
-        echo "https://portal-staging.tracing.catchpoint.net"
-        elif [ "$1" == "qa" ]; then
-        echo "https://portal-qa.tracing.catchpoint.net"
-        elif [ "$1" == "prod" ]; then
-        echo "https://portal.tracing.catchpoint.com"
-        elif [ "$1" == "otel-staging" ]; then
-        echo "https://portal-staging.tracing.catchpoint.net"
-        elif [ "$1" == "otel-qa" ]; then
-        echo "https://portal-qa.tracing.catchpoint.net"
-        elif [ "$1" == "otel-prod" ]; then
-        echo "https://portal.tracing.catchpoint.com"
-    fi
-}
-
 get_ticket_id() {
     MOVIE_ID=$(curl -s -XGET http://localhost:5000/api/movie/random -H "traceparent: $TRACE_PARENT" | jq -r '.movieId')
     TICKETS=$(curl -s -XGET http://localhost:5000/api/ticket/${MOVIE_ID} -H "traceparent: $TRACE_PARENT")
@@ -28,14 +12,6 @@ get_ticket_id() {
     TICKET_ID=$(echo $TICKETS | jq -r ".[$RANDOM_TICKET].ticketId")
     echo $TICKET_ID
 }
-
-if [ -z "$TRACING_PROFILE" ]; then
-    TRACING_PROFILE="staging"
-fi
-
-echo "Using $TRACING_PROFILE profile..."
-URL=$(get_url $TRACING_PROFILE)
-
 
 pushd backend/auth-service
 mvn clean install -DskipTests

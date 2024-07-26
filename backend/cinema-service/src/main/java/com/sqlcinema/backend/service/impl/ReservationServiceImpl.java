@@ -1,6 +1,5 @@
 package com.sqlcinema.backend.service.impl;
 
-import com.catchpoint.trace.api.invocation.InvocationAPI;
 import com.sqlcinema.backend.model.Reservation;
 import com.sqlcinema.backend.model.UserAccount;
 import com.sqlcinema.backend.repository.ReservationRepository;
@@ -30,7 +29,6 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public void deleteReservation(int reservationId) {
         reservationRepository.deleteReservation(reservationId);
-        // InvocationAPI.addIncomingTraceLink("reservation:" + reservationId);
     }
 
     @Override

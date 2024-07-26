@@ -1,6 +1,5 @@
 package com.sqlcinema.backend.controller;
 
-import com.catchpoint.trace.api.invocation.InvocationAPI;
 import com.sqlcinema.backend.manager.ActivityManager;
 import com.sqlcinema.backend.model.Reservation;
 import com.sqlcinema.backend.model.activity.ActivityType;
@@ -60,7 +59,6 @@ public class ReservationController {
         if (reservation == null) {
             return notFound().build();
         }
-        InvocationAPI.addIncomingTraceLink("reservation:" + reservationId);
         return ok(reservation);
     }
 
@@ -72,50 +70,48 @@ public class ReservationController {
             return notFound().build();
         }
         reservationService.deleteReservation(reservationId);
-        //InvocationAPI.addIncomingTraceLink("reservation:" + reservationId);
-        
         activityManager.addActivity(Objects.requireNonNull(getCurrentUser()).getUserId(), ActivityType.DELETE,
                 "User canceled reservation with id " + reservationId);
-        
+
         return noContent().build();
     }
-    
+
     @GetMapping("/revenue")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Float> getRevenue() {
         return ok(reservationService.getRevenue());
     }
-    
+
     @GetMapping("/daily-revenue")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Float> getDailyRevenue() {
         return ok(reservationService.getDailyRevenue());
     }
-    
+
     @GetMapping("/sold-tickets")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Integer> getSoldTickets() {
         return ok(reservationService.getSoldTickets());
     }
-    
+
     @GetMapping("/ticket-count")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Integer> getAllTicketCount() {
         return ok(reservationService.getAllTicketCount());
     }
-    
-    
+
+
     @GetMapping("/most-sold-movie")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> getMostSoldMovie() {
         return ok(reservationService.getMostSoldMovie());
     }
-    
+
     @GetMapping("/least-sold-movie")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> getLeastSoldMovie() {
         return ok(reservationService.getLeastSoldMovie());
     }
-    
-    
+
+
 }
