@@ -25,6 +25,8 @@ pushd backend/notification-service
 mvn clean install -DskipTests
 popd
 
+./otel.sh
+
 VERSION=00
 TRACE_ID=$(head -c 16 /dev/urandom | od -An -t x | tr -d ' ')
 PARENT_ID=$(head -c 8 /dev/urandom | od -An -t x | tr -d ' ')
