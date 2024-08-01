@@ -21,11 +21,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class TicketServiceImpl implements TicketService {
+    private static final String TRACEPARENT_REGEX = "[0-9a-f]{2}-[0-9a-f]{32}-[0-9a-f]{16}-[0-9a-f]{2}";
     private final TicketRepository ticketRepository;
     private final CouponRepository couponRepository;
     private final MovieRepository movieRepository;
@@ -93,14 +95,18 @@ public class TicketServiceImpl implements TicketService {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
-            MessageAttributeValue traceparentAttribute = new MessageAttributeValue()
-                    .withDataType("String")
-                    .withStringValue(traceparent);
             SendMessageRequest sendMessageRequest = new SendMessageRequest()
                     .withQueueUrl(queueUrl)
-                    .withMessageAttributes(Collections.singletonMap("traceparent", traceparentAttribute))
                     .withMessageBody(messageAsString);
+
+            if (traceparent != null && traceparent.matches(TRACEPARENT_REGEX)) {
+                MessageAttributeValue traceparentAttribute = new MessageAttributeValue()
+                        .withDataType("String")
+                        .withStringValue(traceparent);
+                sendMessageRequest.withMessageAttributes(
+                        Collections.singletonMap("traceparent", traceparentAttribute));
+            }
+
             sqsClient.sendMessage(sendMessageRequest);
 
         } catch (Exception e) {

@@ -29,7 +29,7 @@ services:
       MYSQL_DATABASE: sqlcinema
     healthcheck:
       test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
-      interval: 1m
+      interval: 2m
       timeout: 40s
       retries: 10
 
