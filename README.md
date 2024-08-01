@@ -15,7 +15,7 @@ details, and book tickets for a movie.
 1. Retrieve your api key from Catchpoint Portal
 2. Change `<API_KEY>` value from the
     - For **OpenTelemetry** agent:
-        - `backend/auth-service/otel-trace/otel-config.propoerties`
+        - `backend/auth-service/otel-trace/otel-config.properties`
         - `backend/cinema-service/otel-trace/otel-config.properties`
         - `backend/notification-service/otel-trace/otel-config.properties`
 
