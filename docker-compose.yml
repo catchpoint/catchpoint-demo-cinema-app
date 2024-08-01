@@ -1,0 +1,135 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql:8.0
+    command: --lower_case_table_names=1
+    restart: always
+    networks:
+      - common
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./database/sql/create.sql:/docker-entrypoint-initdb.d/1_1.sql
+      - ./database/sql/triggers.sql:/docker-entrypoint-initdb.d/1_2.sql
+      - ./database/sql/views.sql:/docker-entrypoint-initdb.d/1_3.sql
+      - ./database/sql/procedures.sql:/docker-entrypoint-initdb.d/1_4.sql
+      - ./database/sql/inserts/01_users.sql:/docker-entrypoint-initdb.d/2_1.sql
+      - ./database/sql/inserts/03_theatres.sql:/docker-entrypoint-initdb.d/2_2.sql
+      - ./database/sql/inserts/04_seats.sql:/docker-entrypoint-initdb.d/2_3.sql
+      - ./database/sql/inserts/05_genres.sql:/docker-entrypoint-initdb.d/2_4.sql
+      - ./database/sql/inserts/06_movies.sql:/docker-entrypoint-initdb.d/2_5.sql
+      - ./database/sql/inserts/07_persons.sql:/docker-entrypoint-initdb.d/2_6.sql
+      - ./database/sql/inserts/08_tickets.sql:/docker-entrypoint-initdb.d/2_7.sql
+      - ./database/sql/inserts/09_favorite_movies.sql:/docker-entrypoint-initdb.d/2_8.sql
+      - ./database/sql/inserts/10_coupon.sql:/docker-entrypoint-initdb.d/2_9.sql
+      - ./database/sql/inserts/11_keywordsets.sql:/docker-entrypoint-initdb.d/3_1.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sqlcinema
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 2m
+      timeout: 40s
+      retries: 10
+
+  auth-service:
+    image: auth-service
+    restart: always
+    networks:
+      - common
+    build:
+      context: ./backend/auth-service
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_URL: jdbc:mysql://db:3306/sqlcinema?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - '5002:5002'
+    depends_on:
+      db:
+        condition: service_healthy
+
+  cinema-service:
+    image: cinema-service
+    restart: always
+    networks:
+      - common
+    build:
+      context: ./backend/cinema-service
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_URL: jdbc:mysql://db:3306/sqlcinema?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      SQS_QUEUE_URL: http://cinema-app-localstack-sqs:4566/000000000000/cinema-queue
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: dummy
+      AWS_SECRET_ACCESS_KEY: dummy
+      AUTH_SERVICE_URL: http://auth-service:5002
+    ports:
+      - '5000:5000'
+    depends_on:
+      auth-service:
+        condition: service_started
+      db:
+        condition: service_healthy
+      cinema-app-localstack-sqs:
+        condition: service_started
+
+  cinema-app-localstack-sqs:
+    image: localstack/localstack:latest
+    container_name: localstack
+    networks:
+      - common
+    restart: always
+    volumes:
+      - ./localstack/bootstrap.sh:/etc/localstack/init/ready.d/init-aws.sh
+    ports:
+      - '4566-4599:4566-4599'
+    environment:
+      SERVICES: sqs,ses
+      DEBUG: 1
+      DATA_DIR: /tmp/localstack/data
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: dummy
+      AWS_SECRET_ACCESS_KEY: dummy
+    
+  cinema-notfication-service:
+    image: notification-service
+    restart: always
+    networks:
+      - common
+    build:
+      context: ./backend/notification-service
+      dockerfile: Dockerfile
+    environment:
+      SQS_QUEUE_URL: http://cinema-app-localstack-sqs:4566/000000000000/cinema-queue
+      EMAIL_USERNAME: test@cinema-app.local
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: dummy
+      AWS_SECRET_ACCESS_KEY: dummy
+    ports:
+      - '5001:5001'
+    depends_on:
+      - cinema-service
+      - cinema-app-localstack-sqs
+
+  cinema-service-web-ui:
+    image: cinema-service-web-ui
+    networks:
+      - common
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - cinema-service
+
+
+networks:
+  common:
+    driver: bridge

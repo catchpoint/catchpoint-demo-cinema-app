@@ -1,0 +1,11 @@
+USE SQLCinema;
+CALL create_theatre("ROOM1", true);
+CALL create_theatre("ROOM2", true);
+CALL create_theatre("ROOM3", true);
+CALL create_theatre("ROOM4", true);
+CALL create_theatre("ROOM5", true);
+CALL create_theatre("ROOM6", true);
+CALL create_theatre("ROOM7", true);
+CALL create_theatre("ROOM8", true);
+CALL create_theatre("ROOM9", true);
+CALL create_theatre("ROOM10", true);

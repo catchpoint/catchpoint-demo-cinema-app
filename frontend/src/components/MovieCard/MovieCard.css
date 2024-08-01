@@ -1,0 +1,80 @@
+:root {
+    --layer-display: none;
+}
+
+.movie-card-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+
+    justify-content: center;
+}
+
+
+.movie-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px 10px;
+    text-align: center;
+
+    font-size: 11px;
+    font-weight: 500;
+    color: #fff;
+
+    height: 100px;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+
+.movie-card-content>h3 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: wrap;
+    height: 40px;
+}
+
+.movie-card-layer {
+    display: var(--layer-display);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.movie-card-content-list {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    padding-left: 0;
+    padding-bottom: 5px;
+
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+
+    list-style: none;
+    justify-content: center;
+}
+
+.movie-card-content-list>li {
+    background-color: #7a075d;
+    color: #fafafa;
+    padding: 5px 10px;
+}
+
+.movie-card-content-list>li:last-child {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    max-width: max-content;
+}
