@@ -14,7 +14,7 @@ details, and book tickets for a movie.
 
 ## Setting up Catchpoint API Key
 
-1. Retrieve <API_KEY> key from Catchpoint Portal (https://portal.catchpoint.com/ui/Symphony/Integrations/Api/Tracing)
+1. Retrieve `<API_KEY>` key from Catchpoint Portal (https://portal.catchpoint.com/ui/Symphony/Integrations/Api/Tracing)
 2. Change `<API_KEY>` value from the
     - For **OpenTelemetry** agent:
         - `backend/auth-service/otel-trace/otel-config.properties`
