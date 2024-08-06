@@ -9,6 +9,8 @@ details, and book tickets for a movie.
 - Docker Compose (https://docs.docker.com/compose/install/)
 - JQ (https://jqlang.github.io/jq/download/)
 - cURL (https://curl.se/download.html)
+- Maven (https://maven.apache.org/download.cgi)
+- **[Windows]** Powershell (https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell)
 
 ## Setting up Catchpoint API Key
 
@@ -28,9 +30,14 @@ details, and book tickets for a movie.
 
 1. Clone the repository
 2. Install _opentelemetry agent_
-```bash
-./otel.sh
-   ```
+- **For Windows**
+  ```bash
+  ./otel.ps1
+  ```
+- **For Linux/Mac**
+  ```bash
+  ./otel.sh
+  ```
 3. Run the following command to start the application
 ```bash
 docker-compose up
@@ -41,10 +48,14 @@ docker-compose up
 
 1. Clone the repository
 2. Run the following command to start the application
-
-```bash
-./start.sh
-```
+- **For Windows**
+    ```bash
+    ./start.ps1
+    ```
+- **For Linux/Mac**
+    ```bash
+    ./start.sh
+    ```
 
 3. Click go to the trace link of the given trace id
    ![Trace Link](images/automated-result.png)
