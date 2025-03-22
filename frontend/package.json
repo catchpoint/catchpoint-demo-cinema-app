@@ -16,7 +16,7 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",
     "immer": "^9.0.21",
-    "jspdf": "^2.5.1",
+    "jspdf": "^3.0.1",
     "jspdf-autotable": "^3.5.29",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
